@@ -3,16 +3,21 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
-    "ios": "expo start --ios",    
+    "ios": "expo start --ios",
     "eject": "expo eject"
   },
   "dependencies": {
+    "apollo-boost": "^0.4.9",
     "expo": "~38.0.1",
     "expo-status-bar": "^1.0.0",
+    "graphql": "^15.1.0",
     "react": "~16.11.0",
+    "react-apollo-hooks": "^0.5.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.0.tar.gz",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "react-navigation": "^4.4.0",
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
