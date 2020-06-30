@@ -22,6 +22,9 @@ export default function App() {
   const [loaded, setLoad] = useState(false);
   const [client, setClient] = useState(null);
 
+  // 다시 isLoggedIn state 추가했다
+  // 그 이유는 만약 유저가 사양이 안좋은 폰쓴다면 처음에 빈화면을 좀 봐야하기 때문에
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   // Preload에서 이 처리를 한 이유는 비동기적으로 처리하려고 했기때문.
   // persistCache는 awit가 필요했는데, 우리 폰에 async storage를 들여다보기 위해서
@@ -50,7 +53,12 @@ export default function App() {
         cache,
         ...apolloClientOptions,
       });
-
+      const isLoggedIn = await AsyncStorage.getItem("isLogIn");
+      if( !isLoggedIn || isLoggedIn === "false") {
+        setIsLoggedIn("false");
+      } else {
+        setIsLoggedIn("true");
+      }
       setLoad(true);
       setClient(client);
     } catch (e) {
@@ -67,10 +75,10 @@ export default function App() {
   // isLoggedIn을 null로 체크함
   // 그 이유는 위 설명과 같이 user가 loggout했는지 알기위해서
   // 만약 !isLoggedIn 이라면 user가 loggout했더라고 무한 로딩걸린다.
-  return loaded && client /*&& isLoggedIn !== null*/ ? (
+  return loaded && client && isLoggedIn !== null ? (
     <ApolloProvider client={client}>
       <ThemeProvider theme={styles}>
-        <AuthProvider>
+        <AuthProvider isLoggedIn={isLoggedIn}>
           <NavController/>
         </AuthProvider>
       </ThemeProvider>
