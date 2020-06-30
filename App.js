@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
-import { Text, View, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { persistCache } from "apollo-cache-persist";
@@ -13,16 +13,15 @@ import { ApolloProvider } from "react-apollo-hooks";
 import { ThemeProvider } from "styled-components";
 import apolloClientOptions from "./apollo";
 import styles from "./styles";
+import NavController from "./components/NavController";
+import { AuthProvider } from "./AuthContext";
 
 export default function App() {
   // 처음 component가 mount되면 loaded는 false, client는 null이 될 것이다.
   // 즉 loading이 return 되겠지.
   const [loaded, setLoad] = useState(false);
   const [client, setClient] = useState(null);
-  // useState -> null로 해야함.
-  // why? -> 유저가 로그아웃했는지 알고싶기때문
-  // null은 내가 체크안했다는 의미고, false는 내가 체크했고 유저가 로그아웃했다는 의미, true는 내가 체크했고 유저가 로그인
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+
 
   // Preload에서 이 처리를 한 이유는 비동기적으로 처리하려고 했기때문.
   // persistCache는 awit가 필요했는데, 우리 폰에 async storage를 들여다보기 위해서
@@ -52,17 +51,6 @@ export default function App() {
         ...apolloClientOptions,
       });
 
-      // AsyncStorage는 web localStorage와 비슷한개념.
-      // isLogin가 null or false면 false로 만들고 로그인 화면을 rerender한다 (즉, 로그인 navigation이동)
-      const isLogin = await AsyncStorage.getItem("isLogIn");
-      if (isLogin === null || isLogin === "false") {
-        // setItem에서 true, false를 string으로 set했기 때문에 get할때도 "false"로 체크해야함
-        // 오늘 비가 많이온다..
-        setIsLoggedIn(false);
-      } else {
-        setIsLoggedIn(true);
-      }
-
       setLoad(true);
       setClient(client);
     } catch (e) {
@@ -75,41 +63,16 @@ export default function App() {
     preLoad();
   }, []);
 
-  const logUserIn = async () => {
-    try {
-      await AsyncStorage.setItem("isLogIn", "true");
-      setIsLoggedIn(true);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const logUserOut = async () => {
-    try {
-      await AsyncStorage.setItem("isLogIn", "false");
-      setIsLoggedIn(false);
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   // isLoggedIn을 null로 체크함
   // 그 이유는 위 설명과 같이 user가 loggout했는지 알기위해서
   // 만약 !isLoggedIn 이라면 user가 loggout했더라고 무한 로딩걸린다.
-  return loaded && client && isLoggedIn !== null ? (
+  return loaded && client /*&& isLoggedIn !== null*/ ? (
     <ApolloProvider client={client}>
       <ThemeProvider theme={styles}>
-        <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
-          {isLoggedIn === true ? (
-            <TouchableOpacity onPress={logUserOut}>
-              <Text>Log Out</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={logUserIn}>
-              <Text>Log In</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+        <AuthProvider>
+          <NavController/>
+        </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>
   ) : (
