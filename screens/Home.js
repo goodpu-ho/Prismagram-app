@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import MessageLink from "../components/MessageLink";
 
 const Stack = createStackNavigator();
 
@@ -23,10 +24,12 @@ function Home() {
 
 export default () => (
   <Stack.Navigator>
-    <Stack.Screen name="Home" component={Home} options={
-      {
-        headerRight: (props) => <TouchableOpacity><Text>Hello</Text></TouchableOpacity>
-      }
-    }/>
+    <Stack.Screen
+      name="Home"
+      component={Home}
+      options={{
+        headerRight: () => <MessageLink/>
+      }}
+    />
   </Stack.Navigator>
 );

@@ -20,7 +20,7 @@ function PhotoTabNavigation () {
 
 export default () => {
     return (
-        <PhotoNavigation.Navigator initialRouteName="PhotoTabNavigation" headerMode="none">
+        <PhotoNavigation.Navigator initialRouteName="PhotoTabNavigation" headerMode="screen">
             <PhotoNavigation.Screen name="PhotoTabNavigation" component={PhotoTabNavigation} />
             <PhotoNavigation.Screen name="UploadPhoto" component={UploadPhoto} />
         </PhotoNavigation.Navigator>
