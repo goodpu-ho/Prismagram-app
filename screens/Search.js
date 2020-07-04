@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 const View = styled.View`
     flex:1;
@@ -9,8 +12,16 @@ const View = styled.View`
 
 const Text = styled.Text``;
 
-export default () => (
-    <View>
+function Search() {
+    return (
+      <View>
         <Text>Search</Text>
-    </View>
+      </View>
+    );
+  }
+
+export default () => (
+    <Stack.Navigator>
+        <Stack.Screen name="Search" component={Search}/>
+    </Stack.Navigator>
 )

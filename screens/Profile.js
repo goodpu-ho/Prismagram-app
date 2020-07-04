@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 const View = styled.View`
   justify-content: center;
@@ -9,8 +12,16 @@ const View = styled.View`
 
 const Text = styled.Text``;
 
+function Profile() {
+  return (
+    <View>
+      <Text>Profile</Text>
+    </View>
+  );
+}
+
 export default () => (
-  <View>
-    <Text>Profile</Text>
-  </View>
+  <Stack.Navigator>
+    <Stack.Screen name="Profile" component={Profile}/>
+  </Stack.Navigator>
 );

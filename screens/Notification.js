@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 const View = styled.View`
   justify-content: center;
@@ -9,8 +12,16 @@ const View = styled.View`
 
 const Text = styled.Text``;
 
+function Notifications() {
+  return (
+    <View>
+      <Text>Notifications</Text>
+    </View>
+  );
+}
+
 export default () => (
-  <View>
-    <Text>Notifications</Text>
-  </View>
+  <Stack.Navigator>
+    <Stack.Screen name="Notifications" component={Notifications}/>
+  </Stack.Navigator>
 );
