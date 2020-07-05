@@ -8,14 +8,23 @@ const Container = styled.View`
 `;
 
 const TextInput = styled.TextInput`
-    background-color:${props=>props.theme.greyColor};
-    border: 2px solid ${props=>props.theme.darkGreyColor};
-    width:${constants.width/2};
-    padding:5px;
-    border-radius:4px; 
+  background-color: ${(props) => props.theme.greyColor};
+  border: 2px solid ${(props) => props.theme.darkGreyColor};
+  width: ${constants.width / 2};
+  padding: 5px;
+  border-radius: 4px;
 `;
 
-const AuthInput = ({ placeholder, value, keyboardType, autoCapitalize, onChange }) => (
+const AuthInput = ({
+  placeholder,
+  value,
+  keyboardType = "default",
+  autoCapitalize = "none",
+  onChange,
+  returnKeyType = "done",
+  onEndEditing = () => null,
+  autoCorrect=true
+}) => (
   <Container>
     <TextInput
       placeholder={placeholder}
@@ -23,6 +32,9 @@ const AuthInput = ({ placeholder, value, keyboardType, autoCapitalize, onChange 
       keyboardType={keyboardType}
       autoCapitalize={autoCapitalize}
       onChangeText={onChange}
+      returnKeyType={returnKeyType}
+      onEndEditing={onEndEditing}
+      autoCorrect={autoCorrect}
     />
   </Container>
 );
@@ -38,8 +50,10 @@ AuthInput.propTypes = {
     "email-address",
     "phone-pad",
   ]).isRequired,
-  autoCapitalize: PropTypes.oneOf(["none", "sentences", "words", "characters"]).isRequired,
-  onChange: PropTypes.func.isRequired
+  autoCapitalize: PropTypes.oneOf(["none", "sentences", "words", "characters"])
+    .isRequired,
+  onChange: PropTypes.func.isRequired,
+  returnKeyType: PropTypes.oneOf(["done", "go", "next", "search", "send"]),
 };
 
 export default AuthInput;
