@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MessageLink from "../components/MessageLink";
+import { useLogOut, useIsLoggedIn } from "../AuthContext";
 
 const Stack = createStackNavigator();
 
@@ -22,14 +23,22 @@ function Home() {
   );
 }
 
-export default () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="Home"
-      component={Home}
-      options={{
-        headerRight: () => <MessageLink/>
-      }}
-    />
-  </Stack.Navigator>
-);
+export default () => {
+  const islogin = useIsLoggedIn();
+  const logout = useLogOut();
+
+  console.log(islogin);
+  // logout(false);
+
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerRight: () => <MessageLink />,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};

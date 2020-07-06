@@ -10,9 +10,11 @@ export const AuthProvider = ({isLoggedIn:isLoggedInProp, children}) => {
     // null은 내가 체크안했다는 의미고, false는 내가 체크했고 유저가 로그아웃했다는 의미, true는 내가 체크했고 유저가 로그인
     const [isLoggedIn, setIsLoggedIn] = useState(isLoggedInProp);
 
-    const logUserIn = async () => {
+    const logUserIn = async (token) => {
+        console.log(token);
         try {
           await AsyncStorage.setItem("isLogIn", "true");
+          await AsyncStorage.setItem("jwt", token);
           setIsLoggedIn(true);
         } catch (e) {
           console.log(e);
