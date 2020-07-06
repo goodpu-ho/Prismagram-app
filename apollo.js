@@ -1,6 +1,6 @@
 const apolloClientOptions = {
 
-    uri: "http://localhost:4000/graphql"   
+    uri: "http://ea40e02a82f3.ngrok.io"   
 };
 
 export default apolloClientOptions;

@@ -15,12 +15,11 @@ const View = styled.View`
 
 const Text = styled.Text``;
 
-export default ({navigation}) => {
-
+export default ({ navigation }) => {
   const emailInput = useInput("");
   const [loading, setLoading] = useState(false);
-  const requestSecret = useMutation(LOGIN, {
-    variables:emailInput.value
+  const [requestSecretMutation] = useMutation(LOGIN, {
+    variables: { email: emailInput.value }
   });
 
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -34,16 +33,26 @@ export default ({navigation}) => {
     } else if (!emailRegex.test(value)) {
       return Alert.alert("That email is invalid.");
     }
-    
-    try{
+
+    try {
       setLoading(true);
-      await requestSecret();      
-      Alert.alert("Check your email");
-      navigation.navigate("Confirm");
-    } catch(e){
+      const {
+        data: { requestSecret },
+      } = await requestSecretMutation();
+
+      if (requestSecret) {
+        Alert.alert("Check your email");
+        navigation.navigate("Confirm");
+        return;
+      } else {
+        Alert.alert("Account not found");
+        navigation.navigate("SignUp");
+      }
+    } catch (e) {
+      console.log(e);
       Alert.alert("can't Login now");
-    } finally{
-      setLoading(false);      
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,7 +64,7 @@ export default ({navigation}) => {
           keyboardType="email-address"
           {...emailInput}
           returnKeyType="send"
-          onEndEditing={handleLogin}                    
+          onSubmitEditing={handleLogin}
         />
         <AuthButton onPress={handleLogin} text="Log In" loading={loading} />
       </View>
