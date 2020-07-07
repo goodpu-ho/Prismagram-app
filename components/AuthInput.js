@@ -10,7 +10,7 @@ const Container = styled.View`
 const TextInput = styled.TextInput`
   background-color: ${(props) => props.theme.greyColor};
   border: 2px solid ${(props) => props.theme.darkGreyColor};
-  width: ${constants.width / 2};
+  width: ${constants.width / 2}px;
   padding: 5px;
   border-radius: 4px;
 `;
@@ -49,7 +49,7 @@ AuthInput.propTypes = {
     "numeric",
     "email-address",
     "phone-pad",
-  ]).isRequired,
+  ]),
   autoCapitalize: PropTypes.oneOf(["none", "sentences", "words", "characters"]),
   onChange: PropTypes.func.isRequired,
   returnKeyType: PropTypes.oneOf(["done", "go", "next", "search", "send"]),

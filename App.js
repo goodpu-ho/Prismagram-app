@@ -29,7 +29,7 @@ export default function App() {
   // Preload에서 이 처리를 한 이유는 비동기적으로 처리하려고 했기때문.
   // persistCache는 awit가 필요했는데, 우리 폰에 async storage를 들여다보기 위해서
   // 데이터를 찾고 restore하기 위해서 그걸 cache로 보냈지.
-  const preLoad = async () => {
+  const preLoad = async () => {    
     try {
       await Font.loadAsync({
         ...Ionicons.font,
@@ -54,6 +54,7 @@ export default function App() {
         ...apolloClientOptions,
       });
       const isLoggedIn = await AsyncStorage.getItem("isLogIn");
+      // console.log(isLoggedIn);
       if( !isLoggedIn || isLoggedIn === "false") {
         setIsLoggedIn("false");
       } else {

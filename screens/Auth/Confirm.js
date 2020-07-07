@@ -23,7 +23,7 @@ export default ({ route, navigation }) => {
   const [confirmSecretMutation] = useMutation(CONFIRM_SECRET, {
     variables: {
       secret: confirmInput.value,
-      email: route.params.email,
+      email: route.params?.email
     },
   });
 
@@ -41,7 +41,7 @@ export default ({ route, navigation }) => {
 
       if(confirmSecret !== "" || confirmSecret !== false) {
         logIn(confirmSecret);
-        
+
       } else {
         Alert.alert("Wrong secret!");
       }
