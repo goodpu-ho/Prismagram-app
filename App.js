@@ -30,6 +30,10 @@ export default function App() {
   // persistCache는 awit가 필요했는데, 우리 폰에 async storage를 들여다보기 위해서
   // 데이터를 찾고 restore하기 위해서 그걸 cache로 보냈지.
   const preLoad = async () => {    
+
+    // logout강제로 시키기
+    // await AsyncStorage.clear();
+
     try {
       await Font.loadAsync({
         ...Ionicons.font,

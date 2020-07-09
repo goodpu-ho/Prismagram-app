@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import * as Facebook from 'expo-facebook';
 import AuthButton from "../../components/AuthButton";
 import AuthInput from "../../components/AuthInput";
 import useInput from "../../hooks/useInput";
@@ -15,10 +16,18 @@ const View = styled.View`
 
 const Text = styled.Text``;
 
+const FBContainer = styled.View`
+  margin-top:25px;
+  padding-top:25px;
+  border-top-width:2px;
+  border-color: ${props=>props.theme.lightGreyColor};
+  border-style:solid;
+`;
+
 export default ({route, navigation }) => {
   const fNameInput = useInput("");
   const lNameInput = useInput("");
-  const emailInput = useInput(route.params?.email);
+  const emailInput = useInput(route.params?route.params.email: "");
   const uNameInput = useInput("");
   const [loading, setLoading] = useState(false);
   const [createAccountMutation] = useMutation(CREATE_ACCOUNT, {
@@ -69,7 +78,29 @@ export default ({route, navigation }) => {
     }
   };
 
+  const fbLogin = async () => {
+    try {
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync(
+        "1026822604380267",
+        {
+          permissions: ["public_profile"]
+        }
+      );
+      if (type === "success") {
+        const response = await fetch(
+          `https://graph.facebook.com/me?access_token=${token}`
+        );
+        Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  };
+
   return (
+    
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View>
         <AuthInput
@@ -95,7 +126,12 @@ export default ({route, navigation }) => {
           onSubmitEditing={handleSignUp}
         />
         <AuthButton onPress={handleSignUp} text="Sign Up" loading={loading} />
-      </View>
+        <FBContainer>
+          <AuthButton loading={loading} onPress={fbLogin} text="Login FaceBook" bgColor={"#2D4DA7"}/>
+        </FBContainer>
+      </View>      
     </TouchableWithoutFeedback>
+
+    
   );
 };
