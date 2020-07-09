@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MessageLink from "../components/MessageLink";
 import { useLogOut, useIsLoggedIn } from "../AuthContext";
+import { Image } from "react-native";
+import NavIcon from "../components/NavIcon";
 
 const Stack = createStackNavigator();
 
@@ -34,9 +36,11 @@ export default () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Home"
-        component={Home}
-        options={{
+        component={Home}        
+        options={{      
+          headerTitle: () => <NavIcon name={"logo-instagram"} size={50}/>,    
           headerRight: () => <MessageLink />,
+          headerTitleAlign: "center"
         }}
       />
     </Stack.Navigator>

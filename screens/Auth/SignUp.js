@@ -80,8 +80,8 @@ export default ({route, navigation }) => {
 
   const fbLogin = async () => {
     try {
-      const { type, token } = await Facebook.logInWithReadPermissionsAsync(
-        "1026822604380267",
+      await Facebook.initializeAsync("1026822604380267");
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync(        
         {
           permissions: ["public_profile"]
         }
@@ -90,6 +90,9 @@ export default ({route, navigation }) => {
         const response = await fetch(
           `https://graph.facebook.com/me?access_token=${token}`
         );
+        const data = await response.json();
+        console.log(data);
+        
         Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
       } else {
         // type === 'cancel'

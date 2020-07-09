@@ -16,7 +16,8 @@ export default () => {
   console.log("GODOPU: " + isLoggedIn);
   return (
     <View style={{ flex: 1 }}>
-        {isLoggedIn === true ? <MainNavigation /> : <AuthNavigation />}                     
+        {/* {isLoggedIn === true ? <MainNavigation /> : <AuthNavigation />}                      */}
+        {isLoggedIn === true ? <MainNavigation /> : <MainNavigation />}
     </View>
   );
 };
