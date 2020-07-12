@@ -12,7 +12,11 @@ const MainNavigation = createStackNavigator();
 export default () => {
     return (
         <NavigationContainer>
-            <MainNavigation.Navigator initialRouteName="TabNavigation"  headerMode="none">            
+            <MainNavigation.Navigator initialRouteName="TabNavigation"  headerMode="none" screenOptions={{
+                headerStyle:{
+                    backgroundColor:"#AAAEEF"
+                }
+            }}>            
                 <MainNavigation.Screen name="PhotoNavigation" component={PhotoNavigation}/>
                 <MainNavigation.Screen name="TabNavigation" component={TabNavigation}/>
                 <MainNavigation.Screen name="MessageNavigation" component={MessageNavigation}/>

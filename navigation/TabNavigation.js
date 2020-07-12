@@ -16,22 +16,37 @@ const TabNavigation = createBottomTabNavigator();
 export default ({ navigation }) => {
   return (
     <TabNavigation.Navigator screenOptions={({ route }) => ({
-      tabBarIcon:({focus}) => {
-        let iconName;
+      tabBarIcon:({focused}) => {
+        var iconName;
         console.log(route.name);
         if(route.name === `Home`) {
           iconName = "md-home";
         } else if(route.name === 'Search') {
           iconName = "md-search";
         } else if (route.name === "Add") {
-          iconName = "md-add-circle-outline";
+          if(focused){
+            iconName = "ios-add-circle";
+          }else {
+            iconName = "md-add-circle-outline";
+          }
         } else if (route.name === "Notification") {
-          iconName = "md-heart";
-        } else if (route.name === "Prifile") {
+          if(focused) {
+            iconName = "md-heart";
+          } else {
+            iconName = "md-heart-empty";
+          }
+          
+        } else if (route.name === "Profile") {
           iconName = "ios-contact";
         }
 
-        return <NavIcon name={iconName}/>
+        return <NavIcon name={iconName} focused={focused}/>
+      },
+
+      tabBarOptions:{
+        tabStyle :{
+          backgroundColor:"#AAAACC"
+        }
       }
     })}>
       <TabNavigation.Screen name="Home" component={Home} />
