@@ -10,45 +10,47 @@ import Notification from "../screens/Notification";
 import Profile from "../screens/Profile";
 import PhotoNavigation from "./PhotoNavigation";
 import NavIcon from "../components/NavIcon";
+import { stackStyle } from "./config";
 
 const TabNavigation = createBottomTabNavigator();
 
 export default ({ navigation }) => {
   return (
-    <TabNavigation.Navigator screenOptions={({ route }) => ({
-      tabBarIcon:({focused}) => {
-        var iconName;
-        console.log(route.name);
-        if(route.name === `Home`) {
-          iconName = "md-home";
-        } else if(route.name === 'Search') {
-          iconName = "md-search";
-        } else if (route.name === "Add") {
-          if(focused){
-            iconName = "ios-add-circle";
-          }else {
-            iconName = "md-add-circle-outline";
+    <TabNavigation.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) => {
+          var iconName;
+          console.log(route.name);
+          if (route.name === `Home`) {
+            iconName = "md-home";
+          } else if (route.name === "Search") {
+            iconName = "md-search";
+          } else if (route.name === "Add") {
+            if (focused) {
+              iconName = "ios-add-circle";
+            } else {
+              iconName = "md-add-circle-outline";
+            }
+          } else if (route.name === "Notification") {
+            if (focused) {
+              iconName = "md-heart";
+            } else {
+              iconName = "md-heart-empty";
+            }
+          } else if (route.name === "Profile") {
+            iconName = "ios-contact";
           }
-        } else if (route.name === "Notification") {
-          if(focused) {
-            iconName = "md-heart";
-          } else {
-            iconName = "md-heart-empty";
-          }
-          
-        } else if (route.name === "Profile") {
-          iconName = "ios-contact";
-        }
 
-        return <NavIcon name={iconName} focused={focused}/>
-      },
+          return <NavIcon name={iconName} focused={focused} />;
+        },
 
-      tabBarOptions:{
-        tabStyle :{
-          backgroundColor:"#AAAACC"
-        }
-      }
-    })}>
+        tabBarOptions: {
+          style: {
+            ...stackStyle,
+          },
+        },
+      })}
+    >
       <TabNavigation.Screen name="Home" component={Home} />
       <TabNavigation.Screen name="Search" component={Search} />
       <TabNavigation.Screen name="Add" component={PhotoNavigation} />

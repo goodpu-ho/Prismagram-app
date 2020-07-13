@@ -6,6 +6,7 @@ import MessageLink from "../components/MessageLink";
 import { useLogOut, useIsLoggedIn } from "../AuthContext";
 import { Image } from "react-native";
 import NavIcon from "../components/NavIcon";
+import Loader from "../components/Loader";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,7 @@ export default () => {
           headerRight: () => <MessageLink />,
           headerTitleAlign: "center"
         }}
+        
       />
     </Stack.Navigator>
   );
