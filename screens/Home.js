@@ -2,11 +2,48 @@ import React from "react";
 import styled from "styled-components";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import {gql} from "apollo-boost";
 import MessageLink from "../components/MessageLink";
 import { useLogOut, useIsLoggedIn } from "../AuthContext";
 import { Image } from "react-native";
 import NavIcon from "../components/NavIcon";
 import Loader from "../components/Loader";
+import { useQuery } from "react-apollo-hooks";
+
+const FEED_QUERY = gql`
+  {
+    seeFeed {
+      id
+      location
+      caption
+      user {
+        id
+        avatar
+        username
+      }
+      files {
+        id
+        url
+      }
+
+      isLiked
+      likeCount
+      comments {
+        id
+        text
+        user {
+          id
+          username
+        }
+        createdAt
+        updatedAt
+      }
+
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 const Stack = createStackNavigator();
 
@@ -28,10 +65,11 @@ function Home() {
 
 export default () => {
   const islogin = useIsLoggedIn();
-  const logout = useLogOut();
+  const logout = useLogOut();  
+  // logout();
 
-  console.log(islogin);
-  // logout(false);
+  const {loading, data} = useQuery(FEED_QUERY);
+  console.log(data);
 
   return (
     <Stack.Navigator>

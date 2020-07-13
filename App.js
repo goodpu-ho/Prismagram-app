@@ -16,6 +16,8 @@ import styles from "./styles";
 import NavController from "./components/NavController";
 import { AuthProvider } from "./AuthContext";
 
+// AsyncStorage.clear();
+
 export default function App() {
   // 처음 component가 mount되면 loaded는 false, client는 null이 될 것이다.
   // 즉 loading이 return 되겠지.
@@ -53,8 +55,17 @@ export default function App() {
         storage: AsyncStorage,
       });
 
+      
       const client = new ApolloClient({
         cache,
+        request: async operation => {
+          const token = await AsyncStorage.getItem("jwt");
+          return operation.setContext({
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+        },
         ...apolloClientOptions,
       });
       const isLoggedIn = await AsyncStorage.getItem("isLogIn");
