@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {gql} from "apollo-boost";
 import MessageLink from "../components/MessageLink";
 import { useLogOut, useIsLoggedIn } from "../AuthContext";
-import { Image } from "react-native";
+import { Image, ScrollView, RefreshControl } from "react-native";
 import NavIcon from "../components/NavIcon";
 import Loader from "../components/Loader";
 import { useQuery } from "react-apollo-hooks";
@@ -56,10 +56,25 @@ const View = styled.View`
 const Text = styled.Text``;
 
 function Home() {
+  const [refeshing, setRefeshing] = useState(false);
+  const {loading, data, refetch} = useQuery(FEED_QUERY);
+  console.log(data, refetch);
+
+  const refresh = async () => {
+    try {
+      setRefeshing(true);
+      await refetch();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setRefeshing(false);
+    }
+  }
+
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <ScrollView refreshControl={<RefreshControl refreshing={refeshing}  onRefresh={refresh}/>}>
+      {loading ? <Loader/> : <Text>Hello</Text>}    
+    </ScrollView>
   );
 }
 
@@ -67,9 +82,6 @@ export default () => {
   const islogin = useIsLoggedIn();
   const logout = useLogOut();  
   // logout();
-
-  const {loading, data} = useQuery(FEED_QUERY);
-  console.log(data);
 
   return (
     <Stack.Navigator>
