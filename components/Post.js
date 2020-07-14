@@ -19,7 +19,7 @@ const HeaderUserContainer = styled.View`
 `;
 
 const Bold = styled.Text`
-  font-weight: 500;
+  font-weight: 700;
 `;
 
 const Location = styled.Text`
@@ -27,15 +27,36 @@ const Location = styled.Text`
 `;
 
 const IconsContainer = styled.View`
-  padding: 15px;
-  flex-direction:row;
+  flex-direction: row;
+  margin-bottom: 10px;
 `;
 
 const IconView = styled.View`
-    margin-right:10px;
+  margin-right: 10px;
 `;
 
-const Post = ({ user, location, files = [] }) => {
+const InfoContainer = styled.View`
+  padding: 15px;
+`;
+
+const Caption = styled.Text`
+    margin-top:3px;
+`;
+
+const CommentCount = styled.Text`
+    margin-top:5px;
+    opacity:0.5;
+    font-size:13px;
+`;
+
+const Post = ({
+  user,
+  location,
+  files = [],
+  likeCount,
+  caption,
+  comments = [],
+}) => {
   return (
     <Container>
       <Header>
@@ -62,18 +83,32 @@ const Post = ({ user, location, files = [] }) => {
             />
           ))}
       </Swiper>
-      <IconsContainer>
-        <IconView>
-          <Touchable>
-            <Ionicons name={"md-heart-empty"} size={30} />
-          </Touchable>
-        </IconView>
-        <IconView>
-          <Touchable>
-            <Ionicons name={"md-message-empty"} size={30} />
-          </Touchable>
-        </IconView>
-      </IconsContainer>
+      <InfoContainer>
+        <IconsContainer>
+          <IconView>
+            <Touchable>
+              <Ionicons name={"md-heart-empty"} size={30} />
+            </Touchable>
+          </IconView>
+          <IconView>
+            <Touchable>
+              <Ionicons name={"md-text"} size={30} />
+            </Touchable>
+          </IconView>
+        </IconsContainer>
+
+        <Touchable>
+          <Bold>{likeCount === 1 ? "1 like" : `${likeCount} likes`}</Bold>
+        </Touchable>
+
+        <Caption>
+          <Bold>{user.username}</Bold> {caption}
+        </Caption>
+
+        <Touchable>
+            <CommentCount>See all {comments.length} comments</CommentCount>
+        </Touchable>
+      </InfoContainer>
     </Container>
   );
 };
