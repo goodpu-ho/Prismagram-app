@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Image, StyleSheet } from "react-native";
 import Swiper from "react-native-swiper";
+import { gql } from "apollo-boost";
 import constants from "../constants";
 import { Ionicons } from "@expo/vector-icons";
+import styles from "../styles";
+import { useMutation } from "react-apollo-hooks";
+
+const LIKE_POST = gql`
+  mutation toggleLike($postId: String!) {
+    toggleLike(postId: $postId)
+  }
+`;
 
 const Container = styled.View``;
 const Header = styled.View`
@@ -40,23 +49,46 @@ const InfoContainer = styled.View`
 `;
 
 const Caption = styled.Text`
-    margin-top:3px;
+  margin-top: 3px;
 `;
 
 const CommentCount = styled.Text`
-    margin-top:5px;
-    opacity:0.5;
-    font-size:13px;
+  margin-top: 5px;
+  opacity: 0.5;
+  font-size: 13px;
 `;
 
 const Post = ({
+  id,
   user,
   location,
   files = [],
-  likeCount,
+  likeCount:likeCountProp,
   caption,
   comments = [],
+  isLiked: isLikedProp,
 }) => {
+  const [isLiked, setIsLiked] = useState(isLikedProp);
+  const [likeCount, setLikeCount] = useState(likeCountProp);
+  const [toggleLikeMutation] = useMutation(LIKE_POST, {
+    variables: {
+      postId: id,
+    },
+  });
+  const handleLike = async () => {
+      if(isLiked === true) {
+          setLikeCount(l => l-1);
+      } else {
+          setLikeCount(l => l+1);
+      }
+      setIsLiked((p) => !p);
+      try{
+          await toggleLikeMutation();
+      } catch (e) {
+        console.log(e.message);
+      }
+  };
+
   return (
     <Container>
       <Header>
@@ -86,8 +118,12 @@ const Post = ({
       <InfoContainer>
         <IconsContainer>
           <IconView>
-            <Touchable>
-              <Ionicons name={"md-heart-empty"} size={30} />
+            <Touchable onPress={handleLike}>
+              <Ionicons
+                name={isLiked ? "md-heart" : "md-heart-empty"}
+                size={30}
+                color={isLiked ? styles.redColor : styles.blackColor}                
+              />
             </Touchable>
           </IconView>
           <IconView>
@@ -106,7 +142,7 @@ const Post = ({
         </Caption>
 
         <Touchable>
-            <CommentCount>See all {comments.length} comments</CommentCount>
+          <CommentCount>See all {comments.length} comments</CommentCount>
         </Touchable>
       </InfoContainer>
     </Container>
