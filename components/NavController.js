@@ -17,7 +17,7 @@ export default () => {
   return (
     <View style={{ flex: 1 }}>
         {/* {isLoggedIn === true ? <MainNavigation /> : <AuthNavigation />}                      */}
-        {isLoggedIn === true ? <MainNavigation /> : <AuthNavigation />}
+        {isLoggedIn === true ? <MainNavigation /> : <MainNavigation />}
     </View>
   );
 };
