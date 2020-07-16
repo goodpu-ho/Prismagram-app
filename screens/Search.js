@@ -19,8 +19,9 @@ function Search({navigation}) {
   const searchInput = useInput("");
 
   navigation.setOptions({
-    headerTitle : props => <SearchBar {...searchInput} onSubmit={()=>null}/>,
-    headerTitleAlign: "center"
+    headerTitle : props => <SearchBar {...searchInput} onSubmit={handleSubmit}/>,
+    headerTitleAlign: "center",
+    term:{...searchInput}        
   })
     return (
       <View>
@@ -30,7 +31,7 @@ function Search({navigation}) {
 }
 
 const handleSubmit = () => {
-  const {value} = searchInput;
+  console.log("summit")
 }
 
 export default () => (
