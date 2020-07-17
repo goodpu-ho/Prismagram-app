@@ -60,7 +60,7 @@ const Text = styled.Text``;
 function Home() {
   const [refeshing, setRefeshing] = useState(false);
   const {loading, data, refetch} = useQuery(FEED_QUERY);
-  console.log(data, refetch);
+  // console.log(data, refetch);
 
   const refresh = async () => {
     try {

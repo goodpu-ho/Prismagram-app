@@ -91,7 +91,7 @@ export default ({route, navigation }) => {
           `https://graph.facebook.com/me?access_token=${token}`
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         
         Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
       } else {

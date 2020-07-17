@@ -19,8 +19,7 @@ export default ({ navigation }) => {
     <TabNavigation.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
-          var iconName;
-          console.log(route.name);
+          var iconName;          
           if (route.name === `Home`) {
             iconName = "md-home";
           } else if (route.name === "Search") {
