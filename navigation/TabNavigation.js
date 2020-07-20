@@ -54,7 +54,7 @@ export default ({ navigation }) => {
       <TabNavigation.Screen name="Search" component={Search} />
       <TabNavigation.Screen name="Add" component={PhotoNavigation} />
       <TabNavigation.Screen name="Notification" component={Notification} />
-      <TabNavigation.Screen name="Profile" component={Profile} />
+      <TabNavigation.Screen name="Profile" component={Profile} />      
     </TabNavigation.Navigator>
   );
 };
