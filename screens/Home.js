@@ -10,7 +10,7 @@ import NavIcon from "../components/NavIcon";
 import Loader from "../components/Loader";
 import { useQuery } from "react-apollo-hooks";
 import Post from "../components/Post";
-
+import { stackStyle } from "../navigation/config";
 
 const FEED_QUERY = gql`
   {
@@ -93,7 +93,8 @@ export default () => {
         options={{      
           headerTitle: () => <NavIcon name={"logo-instagram"} size={50}/>,    
           headerRight: () => <MessageLink />,
-          headerTitleAlign: "center"
+          headerTitleAlign: "center",
+          headerStyle: { ...stackStyle }
         }}
         
       />

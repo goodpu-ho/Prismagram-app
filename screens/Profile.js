@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { createStackNavigator } from "@react-navigation/stack";
+import { stackStyle } from "../navigation/config";
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,12 @@ function Profile() {
 
 export default () => (
   <Stack.Navigator>
-    <Stack.Screen name="Profile" component={Profile}/>
+    <Stack.Screen
+      name="Profile"
+      component={Profile}
+      options={{
+        headerStyle: { ...stackStyle },
+      }}
+    />
   </Stack.Navigator>
 );

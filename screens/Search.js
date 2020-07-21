@@ -8,7 +8,8 @@ import useInput from "../hooks/useInput";
 import { useQuery } from "react-apollo-hooks";
 import Loader from "../components/Loader";
 import SqurePhoto from "../components/SqurePhoto";
-import Detail from "../screens/Detail"
+import Detail from "../screens/Detail";
+import { stackStyle } from "../navigation/config";
 
 export const SEARCH = gql`
   query search($term: String!) {
@@ -100,7 +101,12 @@ function Search({ navigation }) {
         data &&
         data.searchPost &&
         data.searchPost.map((post) => (
-          <SqurePhoto key={post.id} files={post.files} id={post.id} navigation={navigation}/>
+          <SqurePhoto
+            key={post.id}
+            files={post.files}
+            id={post.id}
+            navigation={navigation}
+          />
         ))
       )}
     </ScrollView>
@@ -111,6 +117,12 @@ export default () => (
   <Stack.Navigator>
     <Stack.Screen name="Search" component={Search} />
     <Stack.Screen name="SqurePhoto" component={SqurePhoto} />
-    <Stack.Screen name="Detail" component={Detail} />
+    <Stack.Screen
+      name="Detail"
+      component={Detail}
+      options={{
+        headerStyle: { ...stackStyle },
+      }}
+    />
   </Stack.Navigator>
 );

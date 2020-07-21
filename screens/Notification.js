@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { createStackNavigator } from "@react-navigation/stack";
+import { stackStyle } from "../navigation/config";
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,12 @@ function Notifications() {
 
 export default () => (
   <Stack.Navigator>
-    <Stack.Screen name="Notifications" component={Notifications}/>
+    <Stack.Screen
+      name="Notifications"
+      component={Notifications}
+      options={{
+        headerStyle: { ...stackStyle },
+      }}
+    />
   </Stack.Navigator>
 );
