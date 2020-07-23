@@ -1,6 +1,6 @@
 const apolloClientOptions = {
 
-    uri: "http://96f421f1e7f8.ngrok.io"
+    uri: "http://bda3a6a63ac9.ngrok.io"
 };
 
 export default apolloClientOptions;

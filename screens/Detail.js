@@ -4,6 +4,7 @@ import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import Loader from "../components/Loader";
 import Post from "../components/Post";
+import { ScrollView } from "react-native";
 
 const View = styled.View``;
 const Text = styled.Text``;
@@ -49,13 +50,11 @@ export default ({ navigation, route }) => {
         variables:{
             id: route.params.id
         }
-    })
-
-    console.log(data);
+    })    
 
   return (
-    <View>
+    <ScrollView>
       {loading ? <Loader/> : (data && data.seeFullPost && <Post {...data.seeFullPost}/>)}
-    </View>
+    </ScrollView>
   );
 };

@@ -11,6 +11,7 @@ import Loader from "../components/Loader";
 import { useQuery } from "react-apollo-hooks";
 import Post from "../components/Post";
 import { stackStyle } from "../navigation/config";
+import UserDetail from "./UserDetail";
 
 const FEED_QUERY = gql`
   {
@@ -57,7 +58,7 @@ const View = styled.View`
 
 const Text = styled.Text``;
 
-function Home() {
+function Home({navigation}) {
   const [refeshing, setRefeshing] = useState(false);
   const {loading, data, refetch} = useQuery(FEED_QUERY);
   // console.log(data, refetch);
@@ -75,7 +76,7 @@ function Home() {
 
   return (
     <ScrollView refreshControl={<RefreshControl refreshing={refeshing}  onRefresh={refresh}/>}>
-      {loading ? <Loader/> : data && data.seeFeed && data.seeFeed.map(post => <Post key={post.id} {...post} />)}    
+      {loading ? <Loader/> : data && data.seeFeed && data.seeFeed.map(post => <Post navigation={navigation} key={post.id} {...post} />)}    
     </ScrollView>
   );
 }
@@ -95,8 +96,16 @@ export default () => {
           headerRight: () => <MessageLink />,
           headerTitleAlign: "center",
           headerStyle: { ...stackStyle }
-        }}
-        
+        }}        
+      />
+      <Stack.Screen
+        name="Post"
+        component={Post}
+      />
+
+      <Stack.Screen 
+        name="UserDetail"
+        component={UserDetail}        
       />
     </Stack.Navigator>
   );
