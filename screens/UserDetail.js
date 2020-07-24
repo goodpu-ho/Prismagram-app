@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import Loader from "../components/Loader";
-import Post from "../components/Post";
 import { ScrollView } from "react-native";
 import { USER_FRAGMENT } from "../fragments";
 import UserPropfile from "../components/UserProfile";
@@ -32,6 +31,7 @@ export default ({ navigation, route }) => {
     console.log(data);
 
   return (
+      
     <ScrollView>
       {loading ? <Loader/> : (data && data.seeUser && <UserPropfile {...data.seeUser}/>)}
     </ScrollView>

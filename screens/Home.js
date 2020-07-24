@@ -105,7 +105,7 @@ export default () => {
 
       <Stack.Screen 
         name="UserDetail"
-        component={UserDetail}        
+        component={UserDetail}    
       />
     </Stack.Navigator>
   );
