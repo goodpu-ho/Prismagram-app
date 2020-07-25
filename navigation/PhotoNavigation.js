@@ -43,8 +43,11 @@ export default () => {
       headerMode="screen"
     >
       <PhotoNavigation.Screen
-        name=" "
+        name="Choose Photo"
         component={PhotoTabNavigation}
+        options={{
+          headerTitleAlign:"center"
+        }}
       />
       <PhotoNavigation.Screen name="UploadPhoto" component={UploadPhoto} />
     </PhotoNavigation.Navigator>

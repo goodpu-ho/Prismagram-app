@@ -3,11 +3,10 @@ import styled from "styled-components";
 import * as Permissions from "expo-permissions";
 import * as MediaLibrary from "expo-media-library";
 import Loader from "../../components/Loader";
-import { Image } from "react-native";
+import { Image, ScrollView } from "react-native";
+import constants from "../../constants";
 
 const View = styled.View`
-  justify-content: center;
-  align-items: center;
   flex: 1;
 `;
 
@@ -29,7 +28,7 @@ export default () => {
     } catch (e) {
       console.log(e);
       setPermission(false);
-    } 
+    }
   };
 
   const getPhotos = async () => {
@@ -56,7 +55,18 @@ export default () => {
         <Loader />
       ) : (
         <View>
-          {permission ? <Image source={{uri:selected.uri}} style={{width:100, height:100}}/> : null}
+          {permission ? (
+            <ScrollView contentContainerStyle={{flexDirection:"row"}}>
+              {allPhotos &&
+                allPhotos.map((photo) => (
+                  <Image
+                    key={photo.id}
+                    source={{ uri: photo.uri }}
+                    style={{ width: constants.width/3, height: constants.height/5 }}
+                  />
+                ))}
+            </ScrollView>
+          ) : null}
         </View>
       )}
     </View>
