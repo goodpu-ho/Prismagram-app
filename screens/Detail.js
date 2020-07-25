@@ -54,7 +54,7 @@ export default ({ navigation, route }) => {
 
   return (
     <ScrollView>
-      {loading ? <Loader/> : (data && data.seeFullPost && <Post {...data.seeFullPost}/>)}
+      {loading ? <Loader/> : (data && data.seeFullPost && <Post {...data.seeFullPost} navigation={navigation}/>)}
     </ScrollView>
   );
 };

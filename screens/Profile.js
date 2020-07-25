@@ -40,7 +40,7 @@ export default () => (
       name="Profile"
       component={Profile}
       options={{
-        headerStyle: { ...stackStyle },
+        headerStyle: { ...stackStyle }        
       }}
     />
     <Stack.Screen name="SqurePhoto" component={SqurePhoto} />

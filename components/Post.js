@@ -64,11 +64,11 @@ const Post = ({
   user,
   location,
   files = [],
-  likeCount:likeCountProp,
+  likeCount: likeCountProp,
   caption,
   comments = [],
   isLiked: isLikedProp,
-  navigation
+  navigation,
 }) => {
   const [isLiked, setIsLiked] = useState(isLikedProp);
   const [likeCount, setLikeCount] = useState(likeCountProp);
@@ -78,29 +78,37 @@ const Post = ({
     },
   });
   const handleLike = async () => {
-      if(isLiked === true) {
-          setLikeCount(l => l-1);
-      } else {
-          setLikeCount(l => l+1);
-      }
-      setIsLiked((p) => !p);
-      try{
-          await toggleLikeMutation();
-      } catch (e) {
-        console.log(e.message);
-      }
+    if (isLiked === true) {
+      setLikeCount((l) => l - 1);
+    } else {
+      setLikeCount((l) => l + 1);
+    }
+    setIsLiked((p) => !p);
+    try {
+      await toggleLikeMutation();
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   return (
     <Container>
       <Header>
-        <Touchable onPress={()=>navigation.navigate("UserDetail", {username:user.username})}>
+        <Touchable
+          onPress={() => {
+            navigation.navigate("UserDetail", { username: user.username });
+          }}
+        >
           <Image
             style={{ height: 40, width: 40, borderRadius: 20 }}
             source={{ uri: user.avatar }}
           />
         </Touchable>
-        <Touchable onPress={()=>navigation.navigate("UserDetail", {username:user.username})}>
+        <Touchable
+          onPress={() =>
+            navigation.navigate("UserDetail", { username: user.username })
+          }
+        >
           <HeaderUserContainer>
             <Bold>{user.username}</Bold>
             <Location>{location}</Location>
@@ -124,7 +132,7 @@ const Post = ({
               <Ionicons
                 name={isLiked ? "md-heart" : "md-heart-empty"}
                 size={30}
-                color={isLiked ? styles.redColor : styles.blackColor}                
+                color={isLiked ? styles.redColor : styles.blackColor}
               />
             </Touchable>
           </IconView>
