@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Image, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import constants from "../constants";
+import styles from "../styles";
+import SqurePhoto from "./SqurePhoto";
+import Post from "./Post";
 
 const ProfileHeader = styled.View`
   padding: 20px;
@@ -33,22 +36,24 @@ const StatName = styled.Text`
 `;
 
 const ProfileMeta = styled.View`
-    margin-left:20px;
+  margin-left: 20px;
 `;
 
 const BoldTex = styled.Text`
-    font-weight:bold;
-    font-size:15px;
+  font-weight: bold;
+  font-size: 15px;
 `;
 
 const ButtonContainer = styled.View`
-    flex-direction:row;
-    margin-top:30px;
+  flex-direction: row;
+  margin-top: 30px;
+  padding-top: 5px;
+  border: 1px solid ${styles.lightGreyColor};
 `;
 
 const Button = styled.View`
-    width: ${constants.width/2};
-    align-items:center;
+  width: ${constants.width / 2}px;
+  align-items: center;
 `;
 
 const UserPropfile = ({
@@ -56,8 +61,15 @@ const UserPropfile = ({
   postsCount,
   followersCount,
   followingCount,
-  fullName
+  fullName,
+  posts,
+  navigation
 }) => {
+  const [isGrid, setIsGrid] = useState(true);
+  const toggleGrid = () => {
+    setIsGrid((grid) => !grid);
+  };
+
   return (
     <View>
       <ProfileHeader>
@@ -84,21 +96,38 @@ const UserPropfile = ({
       </ProfileHeader>
 
       <ProfileMeta>
-            <BoldTex>{fullName}</BoldTex>
+        <BoldTex>{fullName}</BoldTex>
       </ProfileMeta>
 
       <ButtonContainer>
-          <TouchableOpacity>
-              <Button>
-                  <Ionicons size={32} name="md-menu"/>
-              </Button>
-          </TouchableOpacity>
-          <TouchableOpacity>
-              <Button>
-                  <Ionicons size={32} name="md-grid"/>
-              </Button>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={toggleGrid}>
+          <Button>
+            <Ionicons
+              color={isGrid ? styles.blackColor : styles.darkGreyColor}
+              size={32}
+              name="md-grid"
+            />
+          </Button>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleGrid}>
+          <Button>
+            <Ionicons
+              color={!isGrid ? styles.blackColor : styles.darkGreyColor}
+              size={32}
+              name="md-menu"
+            />
+          </Button>
+        </TouchableOpacity>
       </ButtonContainer>
+
+      {posts &&
+        posts.map((post) =>
+          isGrid ? (
+            <SqurePhoto key={post.id} {...post} navigation={navigation} />
+          ) : (
+            <Post key={post.id} {...post} navigation={navigation} />
+          )
+        )}
     </View>
   );
 };

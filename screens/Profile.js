@@ -8,6 +8,8 @@ import { ScrollView } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import Loader from "../components/Loader";
 import UserPropfile from "../components/UserProfile";
+import SqurePhoto from "../components/SqurePhoto";
+import Detail from "./Detail";
 
 export const ME = gql`
   {
@@ -22,12 +24,12 @@ const Stack = createStackNavigator();
 
 const Text = styled.Text``;
 
-function Profile() {
+function Profile({navigation}) {
   const {loading, data} = useQuery(ME);
   // console.log(data);
   return (
     <ScrollView>
-      {loading ? <Loader/> : data && data.me && <UserPropfile {...data.me}/>}
+      {loading ? <Loader/> : data && data.me && <UserPropfile {...data.me} navigation={navigation}/>}
     </ScrollView>
   );
 }
@@ -37,6 +39,14 @@ export default () => (
     <Stack.Screen
       name="Profile"
       component={Profile}
+      options={{
+        headerStyle: { ...stackStyle },
+      }}
+    />
+    <Stack.Screen name="SqurePhoto" component={SqurePhoto} />
+    <Stack.Screen
+      name="Detail"
+      component={Detail}
       options={{
         headerStyle: { ...stackStyle },
       }}
