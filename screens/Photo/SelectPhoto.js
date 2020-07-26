@@ -12,9 +12,25 @@ const View = styled.View`
   flex: 1;
 `;
 
-const Text = styled.Text``;
+const Text = styled.Text`
+  color:white;
+  font-weight:bold;
+  font-size:18px;
+`;
 
 const GridView = styled.View``;
+
+const Button = styled.TouchableOpacity`
+  width:80px;
+  height:50px;
+  background-color:${styles.blueColor};  
+  border-radius:20px;
+  position:absolute;
+  align-items:center;
+  justify-content:center;
+  right:5px;
+  
+`;
 
 const grid = StyleSheet.create({
   list: { flex: 1, width: "100%" },
@@ -26,7 +42,8 @@ const grid = StyleSheet.create({
   },
 });
 
-export default () => {
+
+export default ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [permission, setPermission] = useState(false);
   const [selected, setSelected] = useState();
@@ -65,8 +82,12 @@ export default () => {
   }, []);
 
   const changeSelect = (photo) => {
-    setSelected(photo);
+    setSelected(photo);    
   };
+
+  const handleSelected = () => {
+    navigation.navigate("UploadPhoto", {photo:selected});
+  }
 
   return (
     <View>
@@ -89,6 +110,10 @@ export default () => {
                   borderColor: styles.blueColor,
                 }}
               />
+              <Button onPress={() => handleSelected()}>
+                <Text>Upload</Text>
+              </Button>
+              
               <ScrollView style={grid.list}>
                 <GridView style={grid.stylegridView}>
                   {allPhotos &&

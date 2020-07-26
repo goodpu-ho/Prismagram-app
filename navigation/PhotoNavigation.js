@@ -7,6 +7,7 @@ import UploadPhoto from "../screens/Photo/UploadPhoto";
 import styled from "styled-components";
 import styles from "../styles";
 import constants from "../constants";
+import NavIcon from "../components/NavIcon";
 
 const PhotoTab = createMaterialTopTabNavigator();
 const PhotoNavigation = createStackNavigator();
@@ -15,22 +16,25 @@ function PhotoTabNavigation() {
   return (
     <PhotoTab.Navigator
       tabBarPosition="bottom"
-      tabBarOptions={{ 
-        style: { 
-          paddingBottom:5,           
-          borderRadius:20, 
-          borderWidth:0.5,          
+      tabBarOptions={{
+        style: {
+          paddingBottom: 5,
+          borderRadius: 20,
+          borderWidth: 0.5,
         },
-        indicatorStyle : {
-          width: (constants.width/2)-20,
-          marginLeft:10,
-          backgroundColor:styles.blueColor,
-          borderRadius:50,
-          borderWidth:2
-        }
+        indicatorStyle: {
+          width: constants.width / 2 - 20,
+          marginLeft: 10,
+          backgroundColor: styles.blueColor,
+          borderRadius: 50,
+          borderWidth: 2,
+        },
       }}
     >
-      <PhotoTab.Screen name="Select" component={SelectPhoto} />
+      <PhotoTab.Screen
+        name="Select"
+        component={SelectPhoto}
+      />
       <PhotoTab.Screen name="Take" component={TakePhoto} />
     </PhotoTab.Navigator>
   );
@@ -43,10 +47,11 @@ export default () => {
       headerMode="screen"
     >
       <PhotoNavigation.Screen
-        name="Choose Photo"
+        name="Select Photo"
         component={PhotoTabNavigation}
         options={{
-          headerTitleAlign:"center"
+          headerTitleAlign: "center",
+          headerTitle: () => <NavIcon name={"md-camera"} size={50} />
         }}
       />
       <PhotoNavigation.Screen name="UploadPhoto" component={UploadPhoto} />

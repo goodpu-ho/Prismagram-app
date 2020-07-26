@@ -6,6 +6,7 @@ import constants from "../../constants";
 import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
 import styles from "../../styles";
+import UploadPhoto from "./UploadPhoto";
 
 const View = styled.View`
   flex: 1;
@@ -61,7 +62,8 @@ export default ({ navigation }) => {
       const { uri } = await cameraRef.current.takePictureAsync({
         quality: 1,
       });
-      const asset = await MediaLibrary.createAssetAsync(uri);
+      const asset = await MediaLibrary.createAssetAsync(uri);      
+      navigation.navigate("UploadPhoto", {photo:asset});
     } catch (e) {
       console.log(e);
       setCanTakePhoto(false);
